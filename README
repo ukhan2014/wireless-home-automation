@@ -1,0 +1,5 @@
+original.ino is the getting_started.ino from the arduino examples on the nrf24.
+
+send.ino is the modified version of original.ino which sets up an arduino as node 1 and send a string to node 2.
+
+receive.ino is the modified version of original.ino which sets up an arduino as node 2 and receive/echo back the string to node 1.
