@@ -8,6 +8,9 @@
 #include <SPI.h>
 #include "RF24.h"
 
+// Relay signal pin
+#define RELAY_SIGNAL_PIN  (6)
+
 /****************** User Config ***************************/
 /***      Set this radio as radio number 0 or 1         ***/
 bool radioNumber = 1;
@@ -22,6 +25,9 @@ byte addresses[][6] = {"1Node","2Node"};
 bool role = 0;
 
 void setup() {
+  pinMode(RELAY_SIGNAL_PIN, OUTPUT);
+  digitalWrite(RELAY_SIGNAL_PIN, LOW);
+
   Serial.begin(115200);
   Serial.println(F("RF24/examples/GettingStarted"));
   Serial.println(F("*** PRESS 'T' to begin transmitting to the other node"));
@@ -46,7 +52,7 @@ void setup() {
 }
 
 void loop() {
-  
+  bool On = false;
   
 /****************** Ping Out Role ***************************/  
 if (role == 1)  {
@@ -101,24 +107,30 @@ if (role == 1)  {
   if ( role == 0 )
   {
     unsigned long got_time;
-    char s[25] = {0};
+    char s[30] = {0};
     
     if( radio.available()){
                                                                     // Variable for the received timestamp
       while (radio.available()) {                                   // While there is data ready
         //radio.read( &got_time, sizeof(unsigned long) );             // Get the payload
-        radio.read( s, sizeof(char) * 25);
+        radio.read( s, sizeof(char) * 30);
       }
 
-      stringReceived = String(s);
-      stringTurnOff = String("0Av Please Cut Power x87");
-      stringTurnOn = String("ndy7 Please Turn On n5v0")
+      Serial.print("Just received: ");
+      Serial.print(s);
+      Serial.print("\r");
+      
+      String stringReceived = String(s);
+      String stringTurnOff = String("0Av Please Cut Power x87");
+      String stringTurnOn = String("ndy7 Please Turn On n5v0");
      
-      if (stringOne.equals(stringTwo)) {
-        
+      if (stringReceived.equals(stringTurnOff)) {
+        Serial.print("Got msg to turn OFF");
+        digitalWrite(RELAY_SIGNAL_PIN, LOW);
       }
-      else if (stringOne.equals(stringTwo)) {
-
+      else if (stringReceived.equals(stringTurnOn)) {
+        Serial.print("Got msg to turn ON");
+        digitalWrite(RELAY_SIGNAL_PIN, HIGH);
       }
 
       radio.stopListening();                                        // First, stop listening so we can talk   
