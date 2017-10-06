@@ -109,7 +109,18 @@ if (role == 1)  {
         //radio.read( &got_time, sizeof(unsigned long) );             // Get the payload
         radio.read( s, sizeof(char) * 25);
       }
+
+      stringReceived = String(s);
+      stringTurnOff = String("0Av Please Cut Power x87");
+      stringTurnOn = String("ndy7 Please Turn On n5v0")
      
+      if (stringOne.equals(stringTwo)) {
+        
+      }
+      else if (stringOne.equals(stringTwo)) {
+
+      }
+
       radio.stopListening();                                        // First, stop listening so we can talk   
       //radio.write( &got_time, sizeof(unsigned long) );              // Send the final one back.  
       radio.write( s, sizeof(char) * 25);    
