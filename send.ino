@@ -45,6 +45,8 @@ void setup() {
   radio.startListening();
 }
 
+bool On = false;
+
 void loop() {
   
   
@@ -57,9 +59,18 @@ if (role == 1)  {
     Serial.println(F("Now sending"));
 
     unsigned long start_time = micros();                             // Take the time, and send it.  This will block until complete
-    char s[] = "hello my name is Gomblo";
+    char s[30] = {0}; 
+
+    if(!On) {
+      strcpy(s, "ndy7 Please Turn On n5v0");
+      On = true;
+    } else {
+      strcpy(s, "ndy7 Please Turn Off n5v0");
+      On = false;
+    }
+
      //if (!radio.write( &start_time, sizeof(unsigned long) )){
-     if (!radio.write( s, sizeof(char) * 23 )){
+     if (!radio.write( s, sizeof(char) * 30 )){
        Serial.println(F("failed"));
      }
         
