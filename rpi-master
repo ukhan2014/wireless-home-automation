@@ -1,0 +1,10 @@
+Connections:
+PIN | NRF24L01  |     RPI         |   RPi -P1 Connector
+1       GND          rpi-gnd             (25)
+2       VCC          rpi-3v3             (17)
+3       CE           rpi-gpio22          (15)
+4       CSN          rpi-gpio8           (24)
+5       SCK          rpi-sckl            (23)
+6       MOSI         rpi-mosi            (19)
+7       MISO         rpi-miso            (21)
+8	      IRQ	         -	                 -
